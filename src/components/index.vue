@@ -7,7 +7,7 @@ import '@fullcalendar/core/vdom'
 import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
-
+import {Lunar, Solar} from 'lunar-javascript'
 export default {
   name:'FullcalendarDemo',
   components: {
