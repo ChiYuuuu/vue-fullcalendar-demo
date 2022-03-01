@@ -10,7 +10,7 @@
           popper-class="custom-poper-class"
       >
         <div class="popover-content">
-          <p>{{arg.event.extendedProps.custom_title}}</p>
+          <p>{{ arg.event.extendedProps.custom_title }}</p>
         </div>
 
         <div slot="reference" class="popover">
@@ -56,7 +56,7 @@ export default {
           // next:'下一月'
         },
         dateClick: this.handleDateClick,  // 日期单元格点击事件
-        events: this.getCalendarEvents,
+        events: [],
         dayMaxEvents: true, // 事件超出折叠
         views: {
           //对应月视图
@@ -70,16 +70,18 @@ export default {
       }
     }
   },
+  mounted() {
+    this.getCalendarEvents()
+  },
   methods: {
     handleDateClick(arg) {
       alert('date click! ' + arg.dateStr)
     },
     /**
-     * 动态获取单元格事件 getCalendarEvents(info, successCallback,failureCallback)
-     * @param info
-     * @param successCallback
+     * 动态获取单元格事件
      */
-    getCalendarEvents(info, successCallback) {
+    getCalendarEvents() {
+      // 配合后端接口动态渲染
       let events = []
       let item = {
         title: '自定义事件内容',
@@ -90,8 +92,9 @@ export default {
 
       }
       events.push(item)
-
-      successCallback(events)
+      // const calendarApi = this.$refs.fullCalendar.getApi();
+      this.calendarOptions.events=events
+      // successCallback(events)
 
     },
     /**
@@ -125,7 +128,17 @@ export default {
       }
       html += '</div></div>'
       return {html: html}
-    }
+    },
+    /**
+     * 显示指定日期事件
+     * @param date
+     */
+    gotoDate(date) {
+      const calendarApi = this.$refs.fullCalendar.getApi();
+      // let events= calendarApi.getEvents();
+
+      calendarApi.gotoDate(date);
+    },
 
   }
 }
@@ -147,7 +160,8 @@ p {
   width: 100%;
   padding: 5px;
 }
-.popover{
+
+.popover {
   display: flex;
   align-items: center;
 }
@@ -156,7 +170,8 @@ p {
 .fc .fc-daygrid-day-frame:hover {
   background: #f0f8ff;
 }
-.custom-poper-class{
+
+.custom-poper-class {
   background-color: #d9ecff !important;
 }
 </style>
