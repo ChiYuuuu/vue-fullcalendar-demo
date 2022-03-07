@@ -28,6 +28,7 @@ import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import {Lunar, Solar} from "lunar-javascript";
+import axios from "axios";
 
 export default {
   name: 'FullcalendarDemo',
@@ -81,6 +82,18 @@ export default {
      * 动态获取单元格事件
      */
     getCalendarEvents() {
+      // 可选地，上面的请求可以这样做
+      axios.get('/user', {
+        params: {
+          ID: 12345
+        }
+      })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       // 配合后端接口动态渲染
       let events = []
       let item = {
