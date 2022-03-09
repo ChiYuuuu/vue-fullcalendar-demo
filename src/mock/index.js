@@ -1,23 +1,28 @@
 const Mock = require('mockjs')
 const Random = Mock.Random
 
-const newsData = function () {
+const newsData = function (e) {
+    console.log(JSON.parse(e.body))
+
     let articles = []
     for (let i = 0; i < 10; i++) {
         let newsObj = {
-            date: Random.date(),  //年月日
-            longDate:Random.datetime(), //精确到时分秒
-            number:Random.natural(201,205),  //数字
-            image:Random.image(),      //图片
-            flag:Random.boolean(),  // true-false
-            name:Random.cname(),     //姓名
-            url:Random.url(),       //url地址
-            province:Random.province(),  //省
-            city:Random.city(),     //市
-            county:Random.county()  //区
+            title:Random.ctitle(),
+            date: Random.date(),
+            display: 'list-item',
+            custom_title: '自定义参数',
+            custom_url: '自定义参数',
         }
         articles.push(newsObj)
     }
+
+    articles.push({
+        title:Random.ctitle(),
+        date: Random.now('yyyy-MM-dd'),
+        display: 'list-item',
+        custom_title: '自定义参数',
+        custom_url: '自定义参数',
+    })
 
     return {
         code: 0,
@@ -31,5 +36,4 @@ Mock.setup({
     timeout: 500
 })
 
-Mock.mock('/api/user/myTranferRecord', 'post',newsData )   //post请求
-Mock.mock(RegExp("/api/user/myTranferRecord"+".*"), 'get', newsData)   //get请求
+Mock.mock('/api/events', 'post',newsData )
