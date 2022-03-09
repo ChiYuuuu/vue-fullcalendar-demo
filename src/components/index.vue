@@ -73,7 +73,7 @@ export default {
           }
         },
         dateClick: this.handleDateClick,  // 日期单元格点击事件
-        events: this.getCalendarEvents,
+        events: [],
         dayMaxEvents: true, // 事件超出折叠
         views: {
           //对应月视图
